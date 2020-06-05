@@ -1,12 +1,18 @@
 import React, { useEffect, useMemo, useState, useCallback } from 'react';
-import { createEditor, Editor, Transforms, Text } from 'slate';
+import { createEditor, Editor, Transforms, Text, Node } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 import { Code, P, Leaf } from '../components';
+import { useSelector, useDispatch } from 'react-redux';
+import { StoreType } from '../store';
+import * as actions from '../store/actionCreator';
+import { useEventObservable, useDispatchAction } from '../hooks';
 
 const CustomEditor = {
   isBoldMarkActive(editor: any) {
     const [match] = Editor.nodes(editor, {
-      match: (n) => n.bold === true,
+      match: (n) => {
+        return n.type === 'bold';
+      },
       universal: true,
     }) as any;
 
@@ -34,13 +40,9 @@ const CustomEditor = {
 
 const RichEditor = () => {
   const editor = useMemo(() => withReact(createEditor()), []);
-  const [value, setValue] = useState([
-    {
-      type: 'paragraph',
-      children: [{ text: 'A line of text in a paragraph.' }],
-    },
-  ]);
-
+  const content = useSelector((state: StoreType) => {
+    return state.content.asMutable({ deep: true });
+  });
   const renderElement = useCallback((props: any) => {
     switch (props.element.type) {
       case 'code':
@@ -55,8 +57,13 @@ const RichEditor = () => {
     return <Leaf {...props} />;
   }, []);
 
+  const [contentChange$, onContentChange] = useEventObservable<Node[]>();
+  useDispatchAction(contentChange$, (content: Node[]) => {
+    return actions.changeContent({ content });
+  });
+
   return (
-    <Slate editor={editor} value={value} onChange={(newValue: any) => setValue(newValue)}>
+    <Slate editor={editor} value={content} onChange={onContentChange}>
       <button
         onMouseDown={(e: any) => {
           e.preventDefault();
