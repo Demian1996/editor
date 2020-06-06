@@ -4,6 +4,12 @@ import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { ActionCreator } from '../store/actionCreator';
 
+/**
+ * 将数据流和action绑定
+ *
+ * @param {Observable<any>} stream$
+ * @param {ActionCreator} actionCreator
+ */
 function useDispatchAction(stream$: Observable<any>, actionCreator: ActionCreator) {
   const dispatch = useDispatch();
   useEffect(() => {

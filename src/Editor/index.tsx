@@ -1,42 +1,10 @@
-import React, { useEffect, useMemo, useState, useCallback } from 'react';
-import { createEditor, Editor, Transforms, Text, Node } from 'slate';
+import React, { useMemo, useCallback } from 'react';
+import { createEditor } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 import { Code, P, Leaf } from '../components';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { StoreType } from '../store';
-import * as actions from '../store/actionCreator';
-import { useEventObservable, useDispatchAction } from '../hooks';
-
-const CustomEditor = {
-  isBoldMarkActive(editor: any) {
-    const [match] = Editor.nodes(editor, {
-      match: (n) => {
-        return n.type === 'bold';
-      },
-      universal: true,
-    }) as any;
-
-    return !!match;
-  },
-
-  isCodeBlockActive(editor: any) {
-    const [match] = Editor.nodes(editor, {
-      match: (n) => n.type === 'code',
-    }) as any;
-
-    return !!match;
-  },
-
-  toggleBoldMark(editor: any) {
-    const isActive = CustomEditor.isBoldMarkActive(editor);
-    Transforms.setNodes(editor, { bold: isActive ? null : true }, { match: (n) => Text.isText(n), split: true });
-  },
-
-  toggleCodeBlock(editor: any) {
-    const isActive = CustomEditor.isCodeBlockActive(editor);
-    Transforms.setNodes(editor, { type: isActive ? null : 'code' }, { match: (n) => Editor.isBlock(editor, n) });
-  },
-};
+import { useToggleBold, useChangeContent, useToggleCodeBlock } from '../hooks';
 
 const RichEditor = () => {
   const editor = useMemo(() => withReact(createEditor()), []);
@@ -57,18 +25,16 @@ const RichEditor = () => {
     return <Leaf {...props} />;
   }, []);
 
-  const [contentChange$, onContentChange] = useEventObservable<Node[]>();
-  useDispatchAction(contentChange$, (content: Node[]) => {
-    return actions.changeContent({ content });
-  });
+  const onContentChange = useChangeContent();
+  const onToggleBold = useToggleBold();
+  const onToggleBlock = useToggleCodeBlock();
 
   return (
     <Slate editor={editor} value={content} onChange={onContentChange}>
       <button
         onMouseDown={(e: any) => {
           e.preventDefault();
-          console.log(editor);
-          CustomEditor.toggleBoldMark(editor);
+          onToggleBold(editor);
         }}
       >
         Bold
@@ -76,7 +42,7 @@ const RichEditor = () => {
       <button
         onMouseDown={(e: any) => {
           e.preventDefault();
-          CustomEditor.toggleCodeBlock(editor);
+          onToggleBlock(editor);
         }}
       >
         Code Block
@@ -93,14 +59,14 @@ const RichEditor = () => {
             // When "`" is pressed, keep our existing code block logic.
             case '`': {
               event.preventDefault();
-              CustomEditor.toggleCodeBlock(editor);
+              onToggleBlock(editor);
               break;
             }
 
             // When "B" is pressed, bold the text in the selection.
             case 'b': {
               event.preventDefault();
-              CustomEditor.toggleBoldMark(editor);
+              onToggleBold(editor);
               break;
             }
             default:
