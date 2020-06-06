@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Editor from './Editor';
+import Editor from './container/Editor';
 import { Provider } from 'react-redux';
 import store from './store';
 
