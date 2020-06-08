@@ -43,15 +43,17 @@ const RichEditor = () => {
         renderElement={renderElement}
         renderLeaf={renderLeaf}
         onKeyDown={(e: KeyboardEvent) => {
-          for (const hotkey in HOTKEYS) {
-            if (!isHotkey(hotkey, e as any)) return;
+          for (const func in HOTKEYS) {
+            const hotkey = HOTKEYS[func];
+            if (!isHotkey(hotkey, e as any)) continue;
             e.preventDefault();
             const map = {
-              [HOTKEYS.bold]: toggleBold,
-              [HOTKEYS.codeBlock]: toggleCodeBlock,
-              [HOTKEYS.italic]: toggleItalic,
+              [FUNC.bold]: toggleBold,
+              [FUNC.codeBlock]: toggleCodeBlock,
+              [FUNC.italic]: toggleItalic,
             };
-            map[hotkey](editor);
+            console.log(map[func], func);
+            map[func](editor);
           }
         }}
       />
