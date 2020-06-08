@@ -1,4 +1,3 @@
-export { default as useDispatchAction } from './useDispatchAction';
 export { default as useEventObservable } from './useEventObservable';
 export { default as useToggleBold } from './useToggleBold';
 export { default as useChangeContent } from './useChangeContent';

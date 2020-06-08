@@ -2,16 +2,16 @@ import React, { useMemo, useCallback, KeyboardEvent } from 'react';
 import { createEditor, Editor, Node } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 import { Code, P, Leaf } from '../../components';
-import { useSelector } from 'react-redux';
-import { StoreType } from '../../store';
-import { useToggleBold, useChangeContent, useToggleCodeBlock, useEventObservable } from '../../hooks';
+import { useToggleBold, useChangeContent, useToggleCodeBlock } from '../../hooks';
 import Toolbar from '../Toolbar';
 import { HOTKEYS } from './controller';
 import isHotkey from 'is-hotkey';
+import { useObservable } from 'rxjs-hooks';
+import { Subject, Observable } from 'rxjs';
 
 const RichEditor = () => {
   const editor = useMemo(() => withReact(createEditor()), []);
-  const content = useSelector((state: StoreType) => state.content.asMutable({ deep: true }));
+
   const renderElement = useCallback((props: any) => {
     switch (props.element.type) {
       case 'code':
@@ -26,21 +26,18 @@ const RichEditor = () => {
     return <Leaf {...props} />;
   }, []);
 
-  const [contentChange$, onContentChange] = useEventObservable<Node[]>();
-  const [bold$, toggleBold] = useEventObservable<Editor>();
-  const [codeBlock$, toggleCodeBlock] = useEventObservable<Editor>();
-
-  // 事件流流入hook，处理各自副作用
-  useToggleBold(bold$);
-  useChangeContent(contentChange$);
-  useToggleCodeBlock(codeBlock$);
+  const [contentChange$, onContentChange] = useChangeContent();
+  const [bold$, toggleBold] = useToggleBold();
+  const [codeBlock$, toggleCodeBlock] = useToggleCodeBlock();
+  const content = useObservable(() => contentChange$, [
+    {
+      type: 'paragraph',
+      children: [{ text: 'A line of text in a paragraph.' }],
+    },
+  ]);
 
   return (
-    <Slate
-      editor={editor}
-      value={content}
-      onChange={onContentChange}
-    >
+    <Slate editor={editor} value={content} onChange={onContentChange}>
       <Toolbar toggleBold={toggleBold} toggleCodeBlock={toggleCodeBlock}></Toolbar>
       <Editable
         renderElement={renderElement}

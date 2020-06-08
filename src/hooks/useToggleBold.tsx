@@ -1,5 +1,7 @@
 import { Editor, Transforms, Text } from 'slate';
 import { useEffect } from 'react';
+import { useEventObservable } from '.';
+import { EventHandler } from './useEventObservable';
 import { Subject } from 'rxjs';
 
 const isBoldMarkActive = (editor: Editor) => {
@@ -13,7 +15,9 @@ const isBoldMarkActive = (editor: Editor) => {
   return !!match;
 };
 
-const useToggleBold = (bold$: Subject<Editor>) => {
+const useToggleBold = (): [Subject<Editor>, EventHandler<Editor>] => {
+  const [bold$, onToggleBold] = useEventObservable<Editor>();
+
   useEffect(() => {
     const subscription = bold$.subscribe((editor: Editor) => {
       Transforms.setNodes(
@@ -26,6 +30,8 @@ const useToggleBold = (bold$: Subject<Editor>) => {
       subscription.unsubscribe();
     };
   });
+
+  return [bold$, onToggleBold];
 };
 
 export default useToggleBold;

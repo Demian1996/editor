@@ -1,7 +1,7 @@
 import { Subject } from 'rxjs';
 import { useMemo, useCallback } from 'react';
 
-type EventHandler<T> = (value: T) => void;
+export type EventHandler<T> = (value: T) => void;
 
 /**
  * 生成回调事件和事件流，当回调事件触发时，生成事件流
