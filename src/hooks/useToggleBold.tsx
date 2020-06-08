@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
 const isBoldMarkActive = (editor: Editor) => {
   const [match] = Editor.nodes(editor, {
     match: (n) => {
-      return n.type === 'bold';
+      return n.bold === true;
     },
     universal: true,
   }) as any;
@@ -22,7 +22,7 @@ const useToggleBold = (): [Subject<Editor>, EventHandler<Editor>] => {
     const subscription = bold$.subscribe((editor: Editor) => {
       Transforms.setNodes(
         editor,
-        { bold: isBoldMarkActive(editor) ? null : true },
+        { bold: isBoldMarkActive(editor) ? false : true },
         { match: (n) => Text.isText(n), split: true }
       );
     });
