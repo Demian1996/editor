@@ -1,14 +1,12 @@
-import { useDispatchAction, useEventObservable } from ".";
+import { useDispatchAction } from '.';
 import { changeContent } from '../store/actionCreator';
 import { Node } from 'slate';
+import { Subject } from 'rxjs';
 
-const useChangeContent = () => {
-  const [stream$, onTrigger] = useEventObservable<Node[]>();
-  useDispatchAction(stream$, (content: Node[]) => {
+const useChangeContent = (contentChange$: Subject<Node[]>) => {
+  useDispatchAction(contentChange$, (content: Node[]) => {
     return changeContent({ content });
   });
-
-  return onTrigger;
 };
 
 export default useChangeContent;

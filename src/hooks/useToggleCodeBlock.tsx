@@ -1,6 +1,6 @@
-import { useEventObservable } from './index';
 import { Editor, Transforms } from 'slate';
 import { useEffect } from 'react';
+import { Subject } from 'rxjs';
 
 const isBlockCodeActive = (editor: Editor) => {
   const [match] = Editor.nodes(editor, {
@@ -10,11 +10,9 @@ const isBlockCodeActive = (editor: Editor) => {
   return !!match;
 };
 
-const useToggleCodeBlock = () => {
-  const [stream$, onTrigger] = useEventObservable<Editor>();
-
+const useToggleCodeBlock = (codeBlock$: Subject<Editor>) => {
   useEffect(() => {
-    const subscription = stream$.subscribe((editor: Editor) => {
+    const subscription = codeBlock$.subscribe((editor: Editor) => {
       Transforms.setNodes(
         editor,
         { type: isBlockCodeActive(editor) ? null : 'code' },
@@ -25,8 +23,6 @@ const useToggleCodeBlock = () => {
       subscription.unsubscribe();
     };
   });
-
-  return onTrigger;
 };
 
 export default useToggleCodeBlock;
