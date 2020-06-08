@@ -5,7 +5,7 @@ import { EventHandler } from './useEventObservable';
 import { Subject } from 'rxjs';
 import { FUNC } from '../const';
 
-const isItalicActive = (editor: Editor) => {
+export const isItalicActive = (editor: Editor) => {
   const [match] = Editor.nodes(editor, {
     match: (n) => {
       return n[FUNC.italic] === true;

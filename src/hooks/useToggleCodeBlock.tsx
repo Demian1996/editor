@@ -5,7 +5,7 @@ import { EventHandler } from './useEventObservable';
 import { Subject } from 'rxjs';
 import { FUNC } from '../const';
 
-const isBlockCodeActive = (editor: Editor) => {
+export const isBlockCodeActive = (editor: Editor) => {
   const [match] = Editor.nodes(editor, {
     match: (n) => n.type === FUNC.codeBlock,
   }) as any;

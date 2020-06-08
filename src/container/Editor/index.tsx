@@ -39,12 +39,7 @@ const RichEditor = () => {
 
   return (
     <Slate editor={editor} value={content} onChange={onContentChange}>
-      <Toolbar
-        toggleBold={toggleBold}
-        toggleCodeBlock={toggleCodeBlock}
-        toggleItalic={toggleItalic}
-        toggleUnderline={toggleUnderline}
-      ></Toolbar>
+      <Toolbar />
       <Editable
         renderElement={renderElement}
         renderLeaf={renderLeaf}

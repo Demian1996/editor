@@ -5,7 +5,7 @@ import { EventHandler } from './useEventObservable';
 import { Subject } from 'rxjs';
 import { FUNC } from '../const';
 
-const isUnderlineActive = (editor: Editor) => {
+export const isUnderlineActive = (editor: Editor) => {
   const [match] = Editor.nodes(editor, {
     match: (n) => {
       console.log(n);

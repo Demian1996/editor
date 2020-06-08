@@ -1,16 +1,25 @@
 import React, { FC, MouseEventHandler } from 'react';
-import { Editor } from 'slate';
 import { useSlate } from 'slate-react';
+import {
+  useToggleBold,
+  useToggleCodeBlock,
+  useToggleItalic,
+  useToggleUnderline,
+  isBoldActive,
+  isBlockCodeActive,
+  isItalicActive,
+  isUnderlineActive,
+} from '../../hooks';
+import styles from './index.module.css';
 
-export interface ToolProps {
-  toggleBold(editor: Editor): void;
-  toggleCodeBlock(editor: Editor): void;
-  toggleItalic(editor: Editor): void;
-  toggleUnderline(editor: Editor): void;
-}
+interface ToolProps {}
 
-const Toolbar: FC<ToolProps> = ({ toggleBold, toggleCodeBlock, toggleItalic, toggleUnderline }) => {
+const Toolbar: FC<ToolProps> = () => {
   const editor = useSlate();
+  const [bold$, toggleBold] = useToggleBold();
+  const [codeBlock$, toggleCodeBlock] = useToggleCodeBlock();
+  const [italic$, toggleItalic] = useToggleItalic();
+  const [underline$, toggleUnderline] = useToggleUnderline();
   const onToggleBold: MouseEventHandler = (e) => {
     e.preventDefault();
     toggleBold(editor);
@@ -30,12 +39,21 @@ const Toolbar: FC<ToolProps> = ({ toggleBold, toggleCodeBlock, toggleItalic, tog
     e.preventDefault();
     toggleUnderline(editor);
   };
+
   return (
     <div>
-      <button onClick={onToggleBold}>Bold</button>
-      <button onClick={onToggleCodeBlock}>Code Block</button>
-      <button onClick={onToggleItalic}>Italic</button>
-      <button onClick={onToggleUnderline}>Underline</button>
+      <button className={isBoldActive(editor) ? styles.active : ''} onClick={onToggleBold}>
+        Bold
+      </button>
+      <button className={isBlockCodeActive(editor) ? styles.active : ''} onClick={onToggleCodeBlock}>
+        Code Block
+      </button>
+      <button className={isItalicActive(editor) ? styles.active : ''} onClick={onToggleItalic}>
+        Italic
+      </button>
+      <button className={isUnderlineActive(editor) ? styles.active : ''} onClick={onToggleUnderline}>
+        Underline
+      </button>
     </div>
   );
 };
