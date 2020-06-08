@@ -3,3 +3,4 @@ export { default as useToggleBold } from './useToggleBold';
 export { default as useChangeContent } from './useChangeContent';
 export { default as useToggleCodeBlock } from './useToggleCodeBlock';
 export { default as useToggleItalic } from './useToggleItalic';
+export { default as useToggleUnderline } from './useToggleUnderline';

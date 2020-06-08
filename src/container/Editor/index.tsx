@@ -2,7 +2,7 @@ import React, { useMemo, useCallback, KeyboardEvent } from 'react';
 import { createEditor } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 import { Code, P, Leaf } from '../../components';
-import { useToggleBold, useChangeContent, useToggleCodeBlock, useToggleItalic } from '../../hooks';
+import { useToggleBold, useChangeContent, useToggleCodeBlock, useToggleItalic, useToggleUnderline } from '../../hooks';
 import Toolbar from '../Toolbar';
 import { HOTKEYS, FUNC } from '../../const';
 import isHotkey from 'is-hotkey';
@@ -29,6 +29,7 @@ const RichEditor = () => {
   const [bold$, toggleBold] = useToggleBold();
   const [codeBlock$, toggleCodeBlock] = useToggleCodeBlock();
   const [italic$, toggleItalic] = useToggleItalic();
+  const [underline$, toggleUnderline] = useToggleUnderline();
   const content = useObservable(() => contentChange$, [
     {
       type: 'paragraph',
@@ -38,7 +39,12 @@ const RichEditor = () => {
 
   return (
     <Slate editor={editor} value={content} onChange={onContentChange}>
-      <Toolbar toggleBold={toggleBold} toggleCodeBlock={toggleCodeBlock} toggleItalic={toggleItalic}></Toolbar>
+      <Toolbar
+        toggleBold={toggleBold}
+        toggleCodeBlock={toggleCodeBlock}
+        toggleItalic={toggleItalic}
+        toggleUnderline={toggleUnderline}
+      ></Toolbar>
       <Editable
         renderElement={renderElement}
         renderLeaf={renderLeaf}
@@ -51,8 +57,8 @@ const RichEditor = () => {
               [FUNC.bold]: toggleBold,
               [FUNC.codeBlock]: toggleCodeBlock,
               [FUNC.italic]: toggleItalic,
+              [FUNC.underline]: toggleUnderline,
             };
-            console.log(map[func], func);
             map[func](editor);
           }
         }}
