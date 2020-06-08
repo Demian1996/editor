@@ -1,20 +1,19 @@
 import React, { useMemo, useCallback, KeyboardEvent } from 'react';
-import { createEditor, Editor, Node } from 'slate';
+import { createEditor } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
 import { Code, P, Leaf } from '../../components';
-import { useToggleBold, useChangeContent, useToggleCodeBlock } from '../../hooks';
+import { useToggleBold, useChangeContent, useToggleCodeBlock, useToggleItalic } from '../../hooks';
 import Toolbar from '../Toolbar';
-import { HOTKEYS } from './controller';
+import { HOTKEYS, FUNC } from '../../const';
 import isHotkey from 'is-hotkey';
 import { useObservable } from 'rxjs-hooks';
-import { Subject, Observable } from 'rxjs';
 
 const RichEditor = () => {
   const editor = useMemo(() => withReact(createEditor()), []);
 
   const renderElement = useCallback((props: any) => {
     switch (props.element.type) {
-      case 'code':
+      case FUNC.codeBlock:
         return <Code {...props} />;
       default:
         return <P {...props} />;
@@ -29,6 +28,7 @@ const RichEditor = () => {
   const [contentChange$, onContentChange] = useChangeContent();
   const [bold$, toggleBold] = useToggleBold();
   const [codeBlock$, toggleCodeBlock] = useToggleCodeBlock();
+  const [italic$, toggleItalic] = useToggleItalic();
   const content = useObservable(() => contentChange$, [
     {
       type: 'paragraph',
@@ -38,7 +38,7 @@ const RichEditor = () => {
 
   return (
     <Slate editor={editor} value={content} onChange={onContentChange}>
-      <Toolbar toggleBold={toggleBold} toggleCodeBlock={toggleCodeBlock}></Toolbar>
+      <Toolbar toggleBold={toggleBold} toggleCodeBlock={toggleCodeBlock} toggleItalic={toggleItalic}></Toolbar>
       <Editable
         renderElement={renderElement}
         renderLeaf={renderLeaf}
@@ -49,10 +49,10 @@ const RichEditor = () => {
             const map = {
               [HOTKEYS.bold]: toggleBold,
               [HOTKEYS.codeBlock]: toggleCodeBlock,
+              [HOTKEYS.italic]: toggleItalic,
             };
             map[hotkey](editor);
           }
-          return 's';
         }}
       />
     </Slate>

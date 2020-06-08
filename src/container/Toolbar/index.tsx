@@ -5,9 +5,10 @@ import { useSlate } from 'slate-react';
 export interface ToolProps {
   toggleBold(editor: Editor): void;
   toggleCodeBlock(editor: Editor): void;
+  toggleItalic(editor: Editor): void;
 }
 
-const Toolbar: FC<ToolProps> = ({ toggleBold, toggleCodeBlock }) => {
+const Toolbar: FC<ToolProps> = ({ toggleBold, toggleCodeBlock, toggleItalic }) => {
   const editor = useSlate();
   const onToggleBold: MouseEventHandler = (e) => {
     e.preventDefault();
@@ -17,10 +18,16 @@ const Toolbar: FC<ToolProps> = ({ toggleBold, toggleCodeBlock }) => {
     e.preventDefault();
     toggleCodeBlock(editor);
   };
+
+  const onToggleItalic: MouseEventHandler = (e) => {
+    e.preventDefault();
+    toggleItalic(editor);
+  };
   return (
     <div>
       <button onClick={onToggleBold}>Bold</button>
       <button onClick={onToggleCodeBlock}>Code Block</button>
+      <button onClick={onToggleItalic}>Italic</button>
     </div>
   );
 };

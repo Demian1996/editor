@@ -5,10 +5,10 @@ import { EventHandler } from './useEventObservable';
 import { Subject } from 'rxjs';
 import { FUNC } from '../const';
 
-const isBoldMarkActive = (editor: Editor) => {
+const isItalicActive = (editor: Editor) => {
   const [match] = Editor.nodes(editor, {
     match: (n) => {
-      return n[FUNC.bold] === true;
+      return n[FUNC.italic] === true;
     },
     universal: true,
   }) as any;
@@ -16,14 +16,14 @@ const isBoldMarkActive = (editor: Editor) => {
   return !!match;
 };
 
-const useToggleBold = (): [Subject<Editor>, EventHandler<Editor>] => {
-  const [bold$, onToggleBold] = useEventObservable<Editor>();
+const useToggleItalic = (): [Subject<Editor>, EventHandler<Editor>] => {
+  const [italic$, onToggleItalic] = useEventObservable<Editor>();
 
   useEffect(() => {
-    const subscription = bold$.subscribe((editor: Editor) => {
+    const subscription = italic$.subscribe((editor: Editor) => {
       Transforms.setNodes(
         editor,
-        { [FUNC.bold]: isBoldMarkActive(editor) ? null : true },
+        { [FUNC.italic]: isItalicActive(editor) ? null : true },
         { match: (n) => Text.isText(n), split: true }
       );
     });
@@ -32,7 +32,7 @@ const useToggleBold = (): [Subject<Editor>, EventHandler<Editor>] => {
     };
   });
 
-  return [bold$, onToggleBold];
+  return [italic$, onToggleItalic];
 };
 
-export default useToggleBold;
+export default useToggleItalic;
