@@ -35,6 +35,6 @@
 ### 运行：
 
 ```js
-npm install
-npm run start
+yarn install
+yarn start
 ```
