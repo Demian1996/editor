@@ -1,22 +1,29 @@
 import React, { useMemo, useCallback, KeyboardEvent } from 'react';
 import { createEditor } from 'slate';
-import { Slate, Editable, withReact } from 'slate-react';
+import { Slate, Editable, withReact, RenderElementProps } from 'slate-react';
 import { Code, P, Leaf } from '../../components';
-import { useToggleBold, useChangeContent, useToggleCodeBlock, useToggleItalic, useToggleUnderline } from '../../hooks';
+import {
+  useToggleBold,
+  useChangeContent,
+  useToggleCodeBlock,
+  useToggleItalic,
+  useToggleUnderline,
+  useToggleLayout,
+} from '../../hooks';
 import Toolbar from '../Toolbar';
-import { HOTKEYS, FUNC } from '../../const';
+import { HOTKEYS, FUNC, Layout } from '../../const';
 import isHotkey from 'is-hotkey';
 import { useObservable } from 'rxjs-hooks';
 
 const RichEditor = () => {
   const editor = useMemo(() => withReact(createEditor()), []);
 
-  const renderElement = useCallback((props: any) => {
+  const renderElement = useCallback((props: RenderElementProps) => {
     switch (props.element.type) {
       case FUNC.codeBlock:
-        return <Code {...props} />;
+        return <Code style={{ textAlign: props.element.layout }} {...props} />;
       default:
-        return <P {...props} />;
+        return <P style={{ textAlign: props.element.layout }} {...props} />;
     }
   }, []);
 
@@ -30,6 +37,9 @@ const RichEditor = () => {
   const [codeBlock$, toggleCodeBlock] = useToggleCodeBlock();
   const [italic$, toggleItalic] = useToggleItalic();
   const [underline$, toggleUnderline] = useToggleUnderline();
+  const [leftLayout$, toggleLeftLayout] = useToggleLayout(FUNC.layout.left);
+  const [centerLayout$, toggleCenterLayout] = useToggleLayout(FUNC.layout.center);
+  const [rightLayout$, toggleRightLayout] = useToggleLayout(FUNC.layout.right);
   const content = useObservable(() => contentChange$, [
     {
       type: 'paragraph',
@@ -53,6 +63,9 @@ const RichEditor = () => {
               [FUNC.codeBlock]: toggleCodeBlock,
               [FUNC.italic]: toggleItalic,
               [FUNC.underline]: toggleUnderline,
+              [FUNC.layout.left]: toggleLeftLayout,
+              [FUNC.layout.center]: toggleCenterLayout,
+              [FUNC.layout.right]: toggleRightLayout,
             };
             map[func](editor);
           }

@@ -6,7 +6,6 @@ import { Subject } from 'rxjs';
 import { FUNC } from '../const';
 
 export const isBoldActive = (editor: Editor) => {
-  console.log('trigger');
   const [match] = Editor.nodes(editor, {
     match: (n) => {
       return n[FUNC.bold] === true;

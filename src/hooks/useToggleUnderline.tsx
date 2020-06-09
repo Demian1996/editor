@@ -8,7 +8,6 @@ import { FUNC } from '../const';
 export const isUnderlineActive = (editor: Editor) => {
   const [match] = Editor.nodes(editor, {
     match: (n) => {
-      console.log(n);
       return n[FUNC.underline] === true;
     },
     universal: true,

@@ -1,7 +1,16 @@
 import React, { FC } from 'react';
 
-const P: FC = (props: any) => {
-  return <p {...props.attributes}>{props.children}</p>;
+interface IProps {
+  style: any;
+  attributes: any;
+}
+
+const P: FC<IProps> = (props: any) => {
+  return (
+    <p style={props.style} {...props.attributes}>
+      {props.children}
+    </p>
+  );
 };
 
 export default P;

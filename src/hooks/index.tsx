@@ -17,3 +17,6 @@ export { default as useToggleUnderline } from './useToggleUnderline';
 export * from './useToggleUnderline';
 
 export { default as useObservable } from './useObservable';
+
+export { default as useToggleLayout } from './useToggleLayout';
+export * from './useToggleLayout';

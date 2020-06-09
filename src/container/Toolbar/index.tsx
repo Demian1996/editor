@@ -1,4 +1,4 @@
-import React, { FC, MouseEventHandler } from 'react';
+import React, { FC, MouseEventHandler, useCallback } from 'react';
 import { useSlate } from 'slate-react';
 import {
   useToggleBold,
@@ -9,8 +9,11 @@ import {
   isBlockCodeActive,
   isItalicActive,
   isUnderlineActive,
+  useToggleLayout,
+  isLayoutActive,
 } from '../../hooks';
 import styles from './index.module.css';
+import { FUNC } from '../../const';
 
 interface ToolProps {}
 
@@ -20,26 +23,29 @@ const Toolbar: FC<ToolProps> = () => {
   const [codeBlock$, toggleCodeBlock] = useToggleCodeBlock();
   const [italic$, toggleItalic] = useToggleItalic();
   const [underline$, toggleUnderline] = useToggleUnderline();
-  const onToggleBold: MouseEventHandler = (e) => {
-    e.preventDefault();
-    toggleBold(editor);
-  };
+  const [leftLayout$, toggleLeftLayout] = useToggleLayout(FUNC.layout.left);
+  const [centerLayout$, toggleCenterLayout] = useToggleLayout(FUNC.layout.center);
+  const [rightLayout$, toggleRightLayout] = useToggleLayout(FUNC.layout.right);
+  const createEventHandler = useCallback(
+    (fn): MouseEventHandler => (e) => {
+      e.preventDefault();
+      fn(editor);
+    },
+    [editor]
+  );
+  const onToggleBold: MouseEventHandler = createEventHandler(toggleBold);
 
-  const onToggleCodeBlock: MouseEventHandler = (e) => {
-    e.preventDefault();
-    toggleCodeBlock(editor);
-  };
+  const onToggleCodeBlock: MouseEventHandler = createEventHandler(toggleCodeBlock);
 
-  const onToggleItalic: MouseEventHandler = (e) => {
-    e.preventDefault();
-    toggleItalic(editor);
-  };
+  const onToggleItalic: MouseEventHandler = createEventHandler(toggleItalic);
 
-  const onToggleUnderline: MouseEventHandler = (e) => {
-    e.preventDefault();
-    toggleUnderline(editor);
-  };
+  const onToggleUnderline: MouseEventHandler = createEventHandler(toggleUnderline);
 
+  const onToggleLeftLayout: MouseEventHandler = createEventHandler(toggleLeftLayout);
+
+  const onToggleCenterLayout: MouseEventHandler = createEventHandler(toggleCenterLayout);
+
+  const onToggleRightLayout: MouseEventHandler = createEventHandler(toggleRightLayout);
   return (
     <div>
       <button className={isBoldActive(editor) ? styles.active : ''} onClick={onToggleBold}>
@@ -53,6 +59,18 @@ const Toolbar: FC<ToolProps> = () => {
       </button>
       <button className={isUnderlineActive(editor) ? styles.active : ''} onClick={onToggleUnderline}>
         Underline
+      </button>
+      <button className={isLayoutActive(editor, FUNC.layout.left) ? styles.active : ''} onClick={onToggleLeftLayout}>
+        left
+      </button>
+      <button
+        className={isLayoutActive(editor, FUNC.layout.center) ? styles.active : ''}
+        onClick={onToggleCenterLayout}
+      >
+        center
+      </button>
+      <button className={isLayoutActive(editor, FUNC.layout.right) ? styles.active : ''} onClick={onToggleRightLayout}>
+        right
       </button>
     </div>
   );

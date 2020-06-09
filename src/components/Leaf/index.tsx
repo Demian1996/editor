@@ -5,7 +5,6 @@ const NORMAL = 'normal';
 const NONE = 'none';
 
 const Leaf: React.FC = (props: any) => {
-  console.log(props);
   return (
     <span
       {...props.attributes}
