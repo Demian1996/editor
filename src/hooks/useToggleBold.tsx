@@ -4,17 +4,9 @@ import { useEventObservable } from '.';
 import { EventHandler } from './useEventObservable';
 import { Subject } from 'rxjs';
 import { FUNC } from '../const';
+import { isMarkActive } from '../utils';
 
-export const isBoldActive = (editor: Editor) => {
-  const [match] = Editor.nodes(editor, {
-    match: (n) => {
-      return n[FUNC.bold] === true;
-    },
-    universal: true,
-  }) as any;
-
-  return !!match;
-};
+export const isBoldActive = isMarkActive(FUNC.bold);
 
 const useToggleBold = (): [Subject<Editor>, EventHandler<Editor>] => {
   const [bold$, onToggleBold] = useEventObservable<Editor>();

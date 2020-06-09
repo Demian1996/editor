@@ -7,9 +7,9 @@ interface IProps {
 
 const List: FC<IProps> = (props) => {
   return (
-    <li style={props.style} {...props.attributes}>
+    <ol style={props.style} {...props.attributes}>
       {props.children}
-    </li>
+    </ol>
   );
 };
 

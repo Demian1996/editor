@@ -1,3 +1,33 @@
+export type Bold = 'bold';
+export type Italic = 'italic';
+export type Underline = 'underline';
+export type CodeBlock = 'codeBlock';
+export type DelBlock = 'delBlock';
+export type Color = 'color';
+export type Layout = 'left' | 'center' | 'right';
+export type List = 'orderedList' | 'unorderedList';
+export const DEFAULT_FONT_COLOR = '#000000';
+
+export type FormatType = Bold | Italic | Underline | CodeBlock | DelBlock | Color | Layout | List;
+
+export type FuncType = {
+  bold: Bold;
+  italic: Italic;
+  underline: Underline;
+  codeBlock: CodeBlock;
+  delBlock: DelBlock;
+  color: Color;
+  list: {
+    orderedList: List;
+    unorderedList: List;
+  };
+  layout: {
+    left: Layout;
+    center: Layout;
+    right: Layout;
+  };
+};
+
 export const FUNC: FuncType = {
   bold: 'bold',
   italic: 'italic',
@@ -5,7 +35,10 @@ export const FUNC: FuncType = {
   codeBlock: 'codeBlock',
   delBlock: 'delBlock',
   color: 'color',
-  list: 'list',
+  list: {
+    orderedList: 'orderedList',
+    unorderedList: 'unorderedList',
+  },
   layout: {
     left: 'left',
     center: 'center',
@@ -22,29 +55,3 @@ export const HOTKEYS = {
   [FUNC.layout.center]: 'cmd+shift+c',
   [FUNC.layout.right]: 'cmd+shift+r',
 };
-
-export type FuncType = {
-  bold: Bold;
-  italic: Italic;
-  underline: Underline;
-  codeBlock: CodeBlock;
-  delBlock: DelBlock;
-  color: Color;
-  list: List;
-  layout: {
-    left: Layout;
-    center: Layout;
-    right: Layout;
-  };
-};
-
-export type Bold = 'bold';
-export type Italic = 'italic';
-export type Underline = 'underline';
-export type CodeBlock = 'codeBlock';
-export type DelBlock = 'delBlock';
-export type Color = 'color';
-export type Layout = 'left' | 'center' | 'right';
-export type List = 'list';
-
-export const DEFAULT_FONT_COLOR = '#000000';

@@ -4,17 +4,9 @@ import { useEventObservable } from '.';
 import { EventHandler } from './useEventObservable';
 import { Subject } from 'rxjs';
 import { FUNC } from '../const';
+import { isMarkActive } from '../utils';
 
-export const isUnderlineActive = (editor: Editor) => {
-  const [match] = Editor.nodes(editor, {
-    match: (n) => {
-      return n[FUNC.underline] === true;
-    },
-    universal: true,
-  }) as any;
-
-  return !!match;
-};
+export const isUnderlineActive = isMarkActive(FUNC.underline);
 
 const useToggleUnderline = (): [Subject<Editor>, EventHandler<Editor>] => {
   const [underline$, onToggleUnderline] = useEventObservable<Editor>();

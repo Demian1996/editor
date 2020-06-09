@@ -4,17 +4,9 @@ import { useEventObservable } from '.';
 import { EventHandler } from './useEventObservable';
 import { Subject } from 'rxjs';
 import { FUNC } from '../const';
+import { isMarkActive } from '../utils';
 
-export const isItalicActive = (editor: Editor) => {
-  const [match] = Editor.nodes(editor, {
-    match: (n) => {
-      return n[FUNC.italic] === true;
-    },
-    universal: true,
-  }) as any;
-
-  return !!match;
-};
+export const isItalicActive = isMarkActive(FUNC.italic);
 
 const useToggleItalic = (): [Subject<Editor>, EventHandler<Editor>] => {
   const [italic$, onToggleItalic] = useEventObservable<Editor>();

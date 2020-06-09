@@ -4,14 +4,9 @@ import { useEventObservable } from '.';
 import { EventHandler } from './useEventObservable';
 import { Subject } from 'rxjs';
 import { FUNC } from '../const';
+import { isBlockActive } from '../utils';
 
-export const isBlockCodeActive = (editor: Editor) => {
-  const [match] = Editor.nodes(editor, {
-    match: (n) => n.type === FUNC.codeBlock,
-  }) as any;
-
-  return !!match;
-};
+export const isBlockCodeActive = isBlockActive(FUNC.codeBlock)
 
 const useToggleCodeBlock = (): [Subject<Editor>, EventHandler<Editor>] => {
   const [codeBlock$, onToggleCodeBlock] = useEventObservable<Editor>();

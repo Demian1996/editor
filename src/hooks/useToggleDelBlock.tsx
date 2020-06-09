@@ -4,14 +4,9 @@ import { useEventObservable } from '.';
 import { EventHandler } from './useEventObservable';
 import { Subject } from 'rxjs';
 import { FUNC } from '../const';
+import { isBlockActive } from '../utils';
 
-export const isBlockDelActive = (editor: Editor) => {
-  const [match] = Editor.nodes(editor, {
-    match: (n) => n.type === FUNC.delBlock,
-  }) as any;
-
-  return !!match;
-};
+export const isBlockDelActive = isBlockActive(FUNC.delBlock);
 
 const useToggleDelBlock = (): [Subject<Editor>, EventHandler<Editor>] => {
   const [delBlock$, onToggleDelBlock] = useEventObservable<Editor>();
