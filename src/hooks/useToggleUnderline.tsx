@@ -30,7 +30,7 @@ const useToggleUnderline = (): [Subject<Editor>, EventHandler<Editor>] => {
     return () => {
       subscription.unsubscribe();
     };
-  });
+  }, [underline$]);
 
   return [underline$, onToggleUnderline];
 };

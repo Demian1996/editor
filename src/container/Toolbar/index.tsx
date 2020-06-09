@@ -1,4 +1,4 @@
-import React, { FC, MouseEventHandler, useCallback } from 'react';
+import React, { FC, MouseEventHandler, useCallback, EventHandler, ChangeEventHandler } from 'react';
 import { useSlate } from 'slate-react';
 import {
   useToggleBold,
@@ -13,6 +13,7 @@ import {
   isLayoutActive,
   useToggleDelBlock,
   isBlockDelActive,
+  usePickColor,
 } from '../../hooks';
 import styles from './index.module.css';
 import { FUNC } from '../../const';
@@ -29,6 +30,7 @@ const Toolbar: FC<ToolProps> = () => {
   const [, toggleCenterLayout] = useToggleLayout(FUNC.layout.center);
   const [, toggleRightLayout] = useToggleLayout(FUNC.layout.right);
   const [, toggleDelBlock] = useToggleDelBlock();
+  const [, pickColor] = usePickColor();
   const createEventHandler = useCallback(
     (fn): MouseEventHandler => (e) => {
       e.preventDefault();
@@ -51,6 +53,11 @@ const Toolbar: FC<ToolProps> = () => {
   const onToggleRightLayout = createEventHandler(toggleRightLayout);
 
   const onToggleDelBlock = createEventHandler(toggleDelBlock);
+
+  const onPickColor: ChangeEventHandler = (e) => {
+    e.preventDefault();
+    pickColor((e.target as HTMLInputElement).value);
+  };
   return (
     <div>
       <button className={isBoldActive(editor) ? styles.active : ''} onClick={onToggleBold}>
@@ -80,6 +87,7 @@ const Toolbar: FC<ToolProps> = () => {
       <button className={isLayoutActive(editor, FUNC.layout.right) ? styles.active : ''} onClick={onToggleRightLayout}>
         Right
       </button>
+      <input type="color" onChange={onPickColor} />
     </div>
   );
 };

@@ -26,7 +26,7 @@ const useToggleCodeBlock = (): [Subject<Editor>, EventHandler<Editor>] => {
     return () => {
       subscription.unsubscribe();
     };
-  });
+  }, [codeBlock$]);
 
   return [codeBlock$, onToggleCodeBlock];
 };

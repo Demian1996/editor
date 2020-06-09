@@ -30,7 +30,7 @@ const useToggleItalic = (): [Subject<Editor>, EventHandler<Editor>] => {
     return () => {
       subscription.unsubscribe();
     };
-  });
+  }, [italic$]);
 
   return [italic$, onToggleItalic];
 };

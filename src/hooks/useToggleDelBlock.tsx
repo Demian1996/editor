@@ -26,7 +26,7 @@ const useToggleDelBlock = (): [Subject<Editor>, EventHandler<Editor>] => {
     return () => {
       subscription.unsubscribe();
     };
-  });
+  }, [delBlock$]);
 
   return [delBlock$, onToggleDelBlock];
 };

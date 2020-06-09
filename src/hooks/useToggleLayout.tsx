@@ -25,7 +25,7 @@ const useToggleLayout = (layout: Layout): [Subject<Editor>, EventHandler<Editor>
     return () => {
       subscription.unsubscribe();
     };
-  });
+  }, [layout, layout$]);
 
   return [layout$, onToggleLayout];
 };

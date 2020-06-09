@@ -1,5 +1,4 @@
 export { default as useEventObservable } from './useEventObservable';
-export * from './useEventObservable';
 
 export { default as useToggleBold } from './useToggleBold';
 export * from './useToggleBold';
@@ -23,3 +22,5 @@ export * from './useToggleLayout';
 
 export { default as useToggleDelBlock } from './useToggleDelBlock';
 export * from './useToggleDelBlock';
+
+export { default as usePickColor } from './usePickColor';

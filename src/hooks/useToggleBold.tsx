@@ -30,7 +30,7 @@ const useToggleBold = (): [Subject<Editor>, EventHandler<Editor>] => {
     return () => {
       subscription.unsubscribe();
     };
-  });
+  }, [bold$]);
 
   return [bold$, onToggleBold];
 };
