@@ -5,6 +5,7 @@ export const FUNC: FuncType = {
   codeBlock: 'codeBlock',
   delBlock: 'delBlock',
   color: 'color',
+  list: 'list',
   layout: {
     left: 'left',
     center: 'center',
@@ -29,6 +30,7 @@ export type FuncType = {
   codeBlock: CodeBlock;
   delBlock: DelBlock;
   color: Color;
+  list: List;
   layout: {
     left: Layout;
     center: Layout;
@@ -43,5 +45,6 @@ export type CodeBlock = 'codeBlock';
 export type DelBlock = 'delBlock';
 export type Color = 'color';
 export type Layout = 'left' | 'center' | 'right';
+export type List = 'list';
 
 export const DEFAULT_FONT_COLOR = '#000000';

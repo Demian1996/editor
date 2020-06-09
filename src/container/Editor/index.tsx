@@ -1,7 +1,7 @@
 import React, { useMemo, useCallback, KeyboardEvent } from 'react';
 import { createEditor } from 'slate';
 import { Slate, Editable, withReact, RenderElementProps } from 'slate-react';
-import { Code, P, Leaf } from '../../components';
+import { Code, P, Leaf, Del, List } from '../../components';
 import {
   useToggleBold,
   useChangeContent,
@@ -15,7 +15,6 @@ import Toolbar from '../Toolbar';
 import { HOTKEYS, FUNC } from '../../const';
 import isHotkey from 'is-hotkey';
 import { useObservable } from 'rxjs-hooks';
-import Del from '../../components/Del';
 
 const RichEditor = () => {
   const editor = useMemo(() => withReact(createEditor()), []);
@@ -26,12 +25,13 @@ const RichEditor = () => {
         return <Code style={{ textAlign: props.element.layout }} {...props} />;
       case FUNC.delBlock:
         return <Del style={{ textAlign: props.element.layout }} {...props} />;
+      case FUNC.list:
+        return <List style={{ textAlign: props.element.layout }} {...props} />;
       default:
         return <P style={{ textAlign: props.element.layout }} {...props} />;
     }
   }, []);
 
-  // Define a leaf rendering function that is memoized with `useCallback`.
   const renderLeaf = useCallback((props: any) => {
     return <Leaf {...props} />;
   }, []);

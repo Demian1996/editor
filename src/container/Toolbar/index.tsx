@@ -15,6 +15,8 @@ import {
   isBlockDelActive,
   usePickColor,
   getColor,
+  isBlockListActive,
+  useToggleListBlock,
 } from '../../hooks';
 import styles from './index.module.css';
 import { FUNC, DEFAULT_FONT_COLOR } from '../../const';
@@ -31,6 +33,7 @@ const Toolbar: FC<ToolProps> = () => {
   const [, toggleCenterLayout] = useToggleLayout(FUNC.layout.center);
   const [, toggleRightLayout] = useToggleLayout(FUNC.layout.right);
   const [, toggleDelBlock] = useToggleDelBlock();
+  const [, toggleListBlock] = useToggleListBlock();
   const [, pickColor] = usePickColor();
   const createEventHandler = useCallback(
     (fn): MouseEventHandler => (e) => {
@@ -55,6 +58,8 @@ const Toolbar: FC<ToolProps> = () => {
 
   const onToggleDelBlock = createEventHandler(toggleDelBlock);
 
+  const onToggleListBlock = createEventHandler(toggleListBlock);
+
   const onPickColor: ChangeEventHandler = (e) => {
     pickColor((e.target as HTMLInputElement).value);
   };
@@ -76,6 +81,9 @@ const Toolbar: FC<ToolProps> = () => {
       </button>
       <button className={isBlockDelActive(editor) ? styles.active : ''} onClick={onToggleDelBlock}>
         Del
+      </button>
+      <button className={isBlockListActive(editor) ? styles.active : ''} onClick={onToggleListBlock}>
+        List
       </button>
       <button className={isLayoutActive(editor, FUNC.layout.left) ? styles.active : ''} onClick={onToggleLeftLayout}>
         Left
