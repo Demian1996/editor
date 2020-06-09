@@ -4,7 +4,7 @@ import { useEventObservable } from '.';
 import { EventHandler } from './useEventObservable';
 import { Subject } from 'rxjs';
 import { FUNC } from '../const';
-import { isBlockActive } from '../utils';
+import { isBlockActive, toggleBlock } from '../utils';
 
 export const isBlockDelActive = isBlockActive(FUNC.delBlock);
 
@@ -12,11 +12,7 @@ const useToggleDelBlock = (): [Subject<Editor>, EventHandler<Editor>] => {
   const [delBlock$, onToggleDelBlock] = useEventObservable<Editor>();
   useEffect(() => {
     const subscription = delBlock$.subscribe((editor: Editor) => {
-      Transforms.setNodes(
-        editor,
-        { type: isBlockDelActive(editor) ? null : FUNC.delBlock },
-        { match: (n) => Editor.isBlock(editor, n) }
-      );
+      toggleBlock(editor, FUNC.delBlock);
     });
     return () => {
       subscription.unsubscribe();

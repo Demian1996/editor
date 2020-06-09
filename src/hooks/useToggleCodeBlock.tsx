@@ -4,19 +4,15 @@ import { useEventObservable } from '.';
 import { EventHandler } from './useEventObservable';
 import { Subject } from 'rxjs';
 import { FUNC } from '../const';
-import { isBlockActive } from '../utils';
+import { isBlockActive, toggleBlock } from '../utils';
 
-export const isBlockCodeActive = isBlockActive(FUNC.codeBlock)
+export const isBlockCodeActive = isBlockActive(FUNC.codeBlock);
 
 const useToggleCodeBlock = (): [Subject<Editor>, EventHandler<Editor>] => {
   const [codeBlock$, onToggleCodeBlock] = useEventObservable<Editor>();
   useEffect(() => {
     const subscription = codeBlock$.subscribe((editor: Editor) => {
-      Transforms.setNodes(
-        editor,
-        { type: isBlockCodeActive(editor) ? null : FUNC.codeBlock },
-        { match: (n) => Editor.isBlock(editor, n) }
-      );
+      toggleBlock(editor, FUNC.codeBlock);
     });
     return () => {
       subscription.unsubscribe();

@@ -32,4 +32,3 @@ const useToggleListBlock = (): [Subject<Editor>, EventHandler<Editor>] => {
 };
 
 export default useToggleListBlock;
-
