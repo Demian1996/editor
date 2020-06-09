@@ -14,9 +14,10 @@ import {
   useToggleDelBlock,
   isBlockDelActive,
   usePickColor,
+  getColor,
 } from '../../hooks';
 import styles from './index.module.css';
-import { FUNC } from '../../const';
+import { FUNC, DEFAULT_FONT_COLOR } from '../../const';
 
 interface ToolProps {}
 
@@ -55,9 +56,10 @@ const Toolbar: FC<ToolProps> = () => {
   const onToggleDelBlock = createEventHandler(toggleDelBlock);
 
   const onPickColor: ChangeEventHandler = (e) => {
-    e.preventDefault();
     pickColor((e.target as HTMLInputElement).value);
   };
+
+  const color = getColor(editor);
   return (
     <div>
       <button className={isBoldActive(editor) ? styles.active : ''} onClick={onToggleBold}>
@@ -87,7 +89,7 @@ const Toolbar: FC<ToolProps> = () => {
       <button className={isLayoutActive(editor, FUNC.layout.right) ? styles.active : ''} onClick={onToggleRightLayout}>
         Right
       </button>
-      <input type="color" onChange={onPickColor} />
+      <input type="color" value={color ? color : DEFAULT_FONT_COLOR} onChange={onPickColor} />
     </div>
   );
 };

@@ -24,3 +24,4 @@ export { default as useToggleDelBlock } from './useToggleDelBlock';
 export * from './useToggleDelBlock';
 
 export { default as usePickColor } from './usePickColor';
+export * from './usePickColor';

@@ -43,3 +43,5 @@ export type CodeBlock = 'codeBlock';
 export type DelBlock = 'delBlock';
 export type Color = 'color';
 export type Layout = 'left' | 'center' | 'right';
+
+export const DEFAULT_FONT_COLOR = '#000000';
