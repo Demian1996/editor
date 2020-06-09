@@ -11,6 +11,8 @@ import {
   isUnderlineActive,
   useToggleLayout,
   isLayoutActive,
+  useToggleDelBlock,
+  isBlockDelActive,
 } from '../../hooks';
 import styles from './index.module.css';
 import { FUNC } from '../../const';
@@ -19,13 +21,14 @@ interface ToolProps {}
 
 const Toolbar: FC<ToolProps> = () => {
   const editor = useSlate();
-  const [bold$, toggleBold] = useToggleBold();
-  const [codeBlock$, toggleCodeBlock] = useToggleCodeBlock();
-  const [italic$, toggleItalic] = useToggleItalic();
-  const [underline$, toggleUnderline] = useToggleUnderline();
-  const [leftLayout$, toggleLeftLayout] = useToggleLayout(FUNC.layout.left);
-  const [centerLayout$, toggleCenterLayout] = useToggleLayout(FUNC.layout.center);
-  const [rightLayout$, toggleRightLayout] = useToggleLayout(FUNC.layout.right);
+  const [, toggleBold] = useToggleBold();
+  const [, toggleCodeBlock] = useToggleCodeBlock();
+  const [, toggleItalic] = useToggleItalic();
+  const [, toggleUnderline] = useToggleUnderline();
+  const [, toggleLeftLayout] = useToggleLayout(FUNC.layout.left);
+  const [, toggleCenterLayout] = useToggleLayout(FUNC.layout.center);
+  const [, toggleRightLayout] = useToggleLayout(FUNC.layout.right);
+  const [, toggleDelBlock] = useToggleDelBlock();
   const createEventHandler = useCallback(
     (fn): MouseEventHandler => (e) => {
       e.preventDefault();
@@ -33,19 +36,21 @@ const Toolbar: FC<ToolProps> = () => {
     },
     [editor]
   );
-  const onToggleBold: MouseEventHandler = createEventHandler(toggleBold);
+  const onToggleBold = createEventHandler(toggleBold);
 
-  const onToggleCodeBlock: MouseEventHandler = createEventHandler(toggleCodeBlock);
+  const onToggleCodeBlock = createEventHandler(toggleCodeBlock);
 
-  const onToggleItalic: MouseEventHandler = createEventHandler(toggleItalic);
+  const onToggleItalic = createEventHandler(toggleItalic);
 
-  const onToggleUnderline: MouseEventHandler = createEventHandler(toggleUnderline);
+  const onToggleUnderline = createEventHandler(toggleUnderline);
 
-  const onToggleLeftLayout: MouseEventHandler = createEventHandler(toggleLeftLayout);
+  const onToggleLeftLayout = createEventHandler(toggleLeftLayout);
 
-  const onToggleCenterLayout: MouseEventHandler = createEventHandler(toggleCenterLayout);
+  const onToggleCenterLayout = createEventHandler(toggleCenterLayout);
 
-  const onToggleRightLayout: MouseEventHandler = createEventHandler(toggleRightLayout);
+  const onToggleRightLayout = createEventHandler(toggleRightLayout);
+
+  const onToggleDelBlock = createEventHandler(toggleDelBlock);
   return (
     <div>
       <button className={isBoldActive(editor) ? styles.active : ''} onClick={onToggleBold}>
@@ -60,17 +65,20 @@ const Toolbar: FC<ToolProps> = () => {
       <button className={isUnderlineActive(editor) ? styles.active : ''} onClick={onToggleUnderline}>
         Underline
       </button>
+      <button className={isBlockDelActive(editor) ? styles.active : ''} onClick={onToggleDelBlock}>
+        Del
+      </button>
       <button className={isLayoutActive(editor, FUNC.layout.left) ? styles.active : ''} onClick={onToggleLeftLayout}>
-        left
+        Left
       </button>
       <button
         className={isLayoutActive(editor, FUNC.layout.center) ? styles.active : ''}
         onClick={onToggleCenterLayout}
       >
-        center
+        Center
       </button>
       <button className={isLayoutActive(editor, FUNC.layout.right) ? styles.active : ''} onClick={onToggleRightLayout}>
-        right
+        Right
       </button>
     </div>
   );

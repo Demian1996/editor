@@ -3,6 +3,7 @@ export const FUNC: FuncType = {
   italic: 'italic',
   underline: 'underline',
   codeBlock: 'codeBlock',
+  delBlock: 'delBlock',
   layout: {
     left: 'left',
     center: 'center',
@@ -25,6 +26,7 @@ export type FuncType = {
   italic: Italic;
   underline: Underline;
   codeBlock: CodeBlock;
+  delBlock: DelBlock;
   layout: {
     left: Layout;
     center: Layout;
@@ -36,4 +38,5 @@ export type Bold = 'bold';
 export type Italic = 'italic';
 export type Underline = 'underline';
 export type CodeBlock = 'codeBlock';
+export type DelBlock = 'delBlock';
 export type Layout = 'left' | 'center' | 'right';
