@@ -12,7 +12,7 @@ interface IProps {
   };
 }
 
-const Leaf: React.FC<RenderLeafProps & IProps> = ({ attributes, children, leaf }) => {
+const Leaf: FC<RenderLeafProps & IProps> = ({ attributes, children, leaf }) => {
   if (leaf.bold) {
     children = <strong>{children}</strong>;
   }

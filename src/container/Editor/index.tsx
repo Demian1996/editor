@@ -1,7 +1,7 @@
 import React, { useMemo, useCallback, KeyboardEvent } from 'react';
 import { createEditor } from 'slate';
-import { Slate, Editable, withReact, RenderElementProps } from 'slate-react';
-import { Code, P, Leaf, List } from '../../components';
+import { Slate, Editable, withReact, RenderElementProps, RenderLeafProps } from 'slate-react';
+import { Element, Leaf } from '../../components';
 import {
   useToggleBold,
   useChangeContent,
@@ -20,17 +20,10 @@ const RichEditor = () => {
   const editor = useMemo(() => withReact(createEditor()), []);
 
   const renderElement = useCallback((props: RenderElementProps) => {
-    switch (props.element.type) {
-      case FUNC.codeBlock:
-        return <Code style={{ textAlign: props.element.layout }} {...props} />;
-      case FUNC.list:
-        return <List style={{ textAlign: props.element.layout }} {...props} />;
-      default:
-        return <P style={{ textAlign: props.element.layout }} {...props} />;
-    }
+    return <Element {...props} />;
   }, []);
 
-  const renderLeaf = useCallback((props: any) => {
+  const renderLeaf = useCallback((props: RenderLeafProps) => {
     return <Leaf {...props} />;
   }, []);
 
