@@ -27,7 +27,6 @@ const Element: FC<RenderElementProps> = ({ element, attributes, children }) => {
       );
   }
 
-  console.log('1', element, '1', attributes, '1', children);
   return <Fragment>{children}</Fragment>;
 };
 

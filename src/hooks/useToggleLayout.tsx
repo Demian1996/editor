@@ -20,7 +20,13 @@ const useToggleLayout = (layout: Layout): [Subject<Editor>, EventHandler<Editor>
 
   useEffect(() => {
     const subscription = layout$.subscribe((editor: Editor) => {
-      Transforms.setNodes(editor, { layout }, { match: (n) => Editor.isBlock(editor, n) });
+      Transforms.setNodes(
+        editor,
+        {
+          layout: isLayoutActive(editor, layout) ? null : layout,
+        },
+        { match: (n) => Editor.isBlock(editor, n) }
+      );
     });
     return () => {
       subscription.unsubscribe();
