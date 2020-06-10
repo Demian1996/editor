@@ -1,33 +1,39 @@
-import React, { FC, Fragment } from 'react';
+import React, { FC } from 'react';
 import { RenderElementProps } from 'slate-react';
-import { Code, List, P } from '..';
+import { Code, P, OrderedList, UnorderedList } from '..';
 import { FUNC } from '../../const';
 
-const Element: FC<RenderElementProps> = ({ element, attributes, children }) => {
+interface IProps {
+  element: {
+    layout?: Layout;
+  };
+}
+
+const Element: FC<RenderElementProps & IProps> = ({ element, attributes, children }) => {
   switch (element.type) {
     case FUNC.codeBlock:
-      children = (
+      return (
         <Code style={{ textAlign: element.layout }} attributes={attributes}>
           {children}
         </Code>
       );
-      break;
-    case FUNC.list:
-      children = (
-        <List style={{ textAlign: element.layout }} attributes={attributes}>
+    case FUNC.list.orderedList:
+      return <OrderedList attributes={attributes}>{children}</OrderedList>;
+    case FUNC.list.unorderedList:
+      return <UnorderedList attributes={attributes}>{children}</UnorderedList>;
+    case FUNC.listItem:
+      return (
+        <li style={{ textAlign: element.layout }} {...attributes}>
           {children}
-        </List>
+        </li>
       );
-      break;
     default:
-      children = (
+      return (
         <P style={{ textAlign: element.layout }} attributes={attributes}>
           {children}
         </P>
       );
   }
-
-  return <Fragment>{children}</Fragment>;
 };
 
 export default Element;

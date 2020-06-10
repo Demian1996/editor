@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { useEventObservable } from '.';
 import { EventHandler } from './useEventObservable';
 import { Subject } from 'rxjs';
-import { Layout } from '../const';
 
 export const isLayoutActive = (editor: Editor, layout: Layout) => {
   const [match] = Editor.nodes(editor, {

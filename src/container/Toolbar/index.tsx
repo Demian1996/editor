@@ -1,4 +1,4 @@
-import React, { FC, MouseEventHandler, useCallback, EventHandler, ChangeEventHandler } from 'react';
+import React, { FC, MouseEventHandler, useCallback, ChangeEventHandler } from 'react';
 import { useSlate } from 'slate-react';
 import {
   useToggleBold,
@@ -33,7 +33,8 @@ const Toolbar: FC<ToolProps> = () => {
   const [, toggleCenterLayout] = useToggleLayout(FUNC.layout.center);
   const [, toggleRightLayout] = useToggleLayout(FUNC.layout.right);
   const [, toggleDel] = useToggleDel();
-  const [, toggleListBlock] = useToggleListBlock();
+  const [, toggleOrderedListBlock] = useToggleListBlock(FUNC.list.orderedList);
+  const [, toggleUnorderedListBlock] = useToggleListBlock(FUNC.list.unorderedList);
   const [, pickColor] = usePickColor();
   const createEventHandler = useCallback(
     (fn): MouseEventHandler => (e) => {
@@ -58,7 +59,9 @@ const Toolbar: FC<ToolProps> = () => {
 
   const onToggleDel = createEventHandler(toggleDel);
 
-  const onToggleListBlock = createEventHandler(toggleListBlock);
+  const onToggleOrderedListBlock = createEventHandler(toggleOrderedListBlock);
+
+  const onToggleUnorderedListBlock = createEventHandler(toggleUnorderedListBlock);
 
   const onPickColor: ChangeEventHandler = (e) => {
     pickColor((e.target as HTMLInputElement).value);
@@ -82,8 +85,17 @@ const Toolbar: FC<ToolProps> = () => {
       <button className={isDelActive(editor) ? styles.active : ''} onClick={onToggleDel}>
         Del
       </button>
-      <button className={isBlockListActive(editor) ? styles.active : ''} onClick={onToggleListBlock}>
-        List
+      <button
+        className={isBlockListActive(editor, FUNC.list.orderedList) ? styles.active : ''}
+        onClick={onToggleOrderedListBlock}
+      >
+        Ol
+      </button>
+      <button
+        className={isBlockListActive(editor, FUNC.list.unorderedList) ? styles.active : ''}
+        onClick={onToggleUnorderedListBlock}
+      >
+        Ul
       </button>
       <button className={isLayoutActive(editor, FUNC.layout.left) ? styles.active : ''} onClick={onToggleLeftLayout}>
         Left

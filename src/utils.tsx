@@ -1,7 +1,12 @@
 import { Editor, Transforms, Text } from 'slate';
-import { FormatType } from './const';
+import { LIST_TYPES } from './const';
 
 export const toggleBlock = (editor: Editor, format: FormatType) => {
+  // 如果外部有套ol、ul标签，则去除包裹
+  Transforms.unwrapNodes(editor, {
+    match: (n: any) => LIST_TYPES.includes(n.type),
+    split: true,
+  });
   Transforms.setNodes(
     editor,
     { type: isBlockActive(format)(editor) ? null : format },
