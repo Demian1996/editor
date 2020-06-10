@@ -1,7 +1,7 @@
 import React, { useMemo, useCallback, KeyboardEvent } from 'react';
 import { createEditor } from 'slate';
 import { Slate, Editable, withReact, RenderElementProps } from 'slate-react';
-import { Code, P, Leaf, Del, List } from '../../components';
+import { Code, P, Leaf, List } from '../../components';
 import {
   useToggleBold,
   useChangeContent,
@@ -9,7 +9,7 @@ import {
   useToggleItalic,
   useToggleUnderline,
   useToggleLayout,
-  useToggleDelBlock,
+  useToggleDel,
 } from '../../hooks';
 import Toolbar from '../Toolbar';
 import { HOTKEYS, FUNC } from '../../const';
@@ -23,8 +23,6 @@ const RichEditor = () => {
     switch (props.element.type) {
       case FUNC.codeBlock:
         return <Code style={{ textAlign: props.element.layout }} {...props} />;
-      case FUNC.delBlock:
-        return <Del style={{ textAlign: props.element.layout }} {...props} />;
       case FUNC.list:
         return <List style={{ textAlign: props.element.layout }} {...props} />;
       default:
@@ -44,7 +42,7 @@ const RichEditor = () => {
   const [, toggleLeftLayout] = useToggleLayout(FUNC.layout.left);
   const [, toggleCenterLayout] = useToggleLayout(FUNC.layout.center);
   const [, toggleRightLayout] = useToggleLayout(FUNC.layout.right);
-  const [, toggleDelBlock] = useToggleDelBlock();
+  const [, toggleDel] = useToggleDel();
   const content = useObservable(() => contentChange$, [
     {
       type: 'paragraph',
@@ -68,7 +66,7 @@ const RichEditor = () => {
               [FUNC.codeBlock]: toggleCodeBlock,
               [FUNC.italic]: toggleItalic,
               [FUNC.underline]: toggleUnderline,
-              [FUNC.delBlock]: toggleDelBlock,
+              [FUNC.del]: toggleDel,
               [FUNC.layout.left]: toggleLeftLayout,
               [FUNC.layout.center]: toggleCenterLayout,
               [FUNC.layout.right]: toggleRightLayout,

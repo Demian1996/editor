@@ -11,8 +11,8 @@ import {
   isUnderlineActive,
   useToggleLayout,
   isLayoutActive,
-  useToggleDelBlock,
-  isBlockDelActive,
+  useToggleDel,
+  isDelActive,
   usePickColor,
   getColor,
   isBlockListActive,
@@ -32,7 +32,7 @@ const Toolbar: FC<ToolProps> = () => {
   const [, toggleLeftLayout] = useToggleLayout(FUNC.layout.left);
   const [, toggleCenterLayout] = useToggleLayout(FUNC.layout.center);
   const [, toggleRightLayout] = useToggleLayout(FUNC.layout.right);
-  const [, toggleDelBlock] = useToggleDelBlock();
+  const [, toggleDel] = useToggleDel();
   const [, toggleListBlock] = useToggleListBlock();
   const [, pickColor] = usePickColor();
   const createEventHandler = useCallback(
@@ -56,7 +56,7 @@ const Toolbar: FC<ToolProps> = () => {
 
   const onToggleRightLayout = createEventHandler(toggleRightLayout);
 
-  const onToggleDelBlock = createEventHandler(toggleDelBlock);
+  const onToggleDel = createEventHandler(toggleDel);
 
   const onToggleListBlock = createEventHandler(toggleListBlock);
 
@@ -79,7 +79,7 @@ const Toolbar: FC<ToolProps> = () => {
       <button className={isUnderlineActive(editor) ? styles.active : ''} onClick={onToggleUnderline}>
         Underline
       </button>
-      <button className={isBlockDelActive(editor) ? styles.active : ''} onClick={onToggleDelBlock}>
+      <button className={isDelActive(editor) ? styles.active : ''} onClick={onToggleDel}>
         Del
       </button>
       <button className={isBlockListActive(editor) ? styles.active : ''} onClick={onToggleListBlock}>

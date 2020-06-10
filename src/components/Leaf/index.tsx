@@ -1,21 +1,41 @@
 import React, { FC } from 'react';
 import { FUNC, DEFAULT_FONT_COLOR } from '../../const';
+import { RenderLeafProps } from 'slate-react';
 
-const NORMAL = 'normal';
-const NONE = 'none';
+interface IProps {
+  leaf: {
+    bold?: boolean;
+    underline?: boolean;
+    italic?: boolean;
+    del?: boolean;
+    color?: string;
+  };
+}
 
-const Leaf: React.FC = (props: any) => {
+const Leaf: React.FC<RenderLeafProps & IProps> = ({ attributes, children, leaf }) => {
+  if (leaf.bold) {
+    children = <strong>{children}</strong>;
+  }
+
+  if (leaf.del) {
+    children = <s>{children}</s>;
+  }
+
+  if (leaf.italic) {
+    children = <em>{children}</em>;
+  }
+
+  if (leaf.underline) {
+    children = <u>{children}</u>;
+  }
   return (
     <span
-      {...props.attributes}
+      {...attributes}
       style={{
-        fontWeight: props.leaf[FUNC.bold] ? FUNC.bold : NORMAL,
-        fontStyle: props.leaf[FUNC.italic] ? FUNC.italic : NORMAL,
-        textDecoration: props.leaf[FUNC.underline] ? FUNC.underline : NONE,
-        color: props.leaf[FUNC.color] ? props.leaf.color : DEFAULT_FONT_COLOR,
+        color: leaf[FUNC.color] ? leaf.color : DEFAULT_FONT_COLOR,
       }}
     >
-      {props.children}
+      {children}
     </span>
   );
 };

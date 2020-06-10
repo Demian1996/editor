@@ -20,8 +20,8 @@ export { default as useObservable } from './useObservable';
 export { default as useToggleLayout } from './useToggleLayout';
 export * from './useToggleLayout';
 
-export { default as useToggleDelBlock } from './useToggleDelBlock';
-export * from './useToggleDelBlock';
+export { default as useToggleDel } from './useToggleDel';
+export * from './useToggleDel';
 
 export { default as usePickColor } from './usePickColor';
 export * from './usePickColor';

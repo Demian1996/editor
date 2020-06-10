@@ -2,20 +2,20 @@ export type Bold = 'bold';
 export type Italic = 'italic';
 export type Underline = 'underline';
 export type CodeBlock = 'codeBlock';
-export type DelBlock = 'delBlock';
+export type Del = 'del';
 export type Color = 'color';
 export type Layout = 'left' | 'center' | 'right';
 export type List = 'orderedList' | 'unorderedList';
 export const DEFAULT_FONT_COLOR = '#000000';
 
-export type FormatType = Bold | Italic | Underline | CodeBlock | DelBlock | Color | Layout | List;
+export type FormatType = Bold | Italic | Underline | CodeBlock | Del | Color | Layout | List;
 
 export type FuncType = {
   bold: Bold;
   italic: Italic;
   underline: Underline;
   codeBlock: CodeBlock;
-  delBlock: DelBlock;
+  del: Del;
   color: Color;
   list: {
     orderedList: List;
@@ -33,7 +33,7 @@ export const FUNC: FuncType = {
   italic: 'italic',
   underline: 'underline',
   codeBlock: 'codeBlock',
-  delBlock: 'delBlock',
+  del: 'del',
   color: 'color',
   list: {
     orderedList: 'orderedList',
