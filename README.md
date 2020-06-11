@@ -37,7 +37,7 @@ yarn run start
 - [x] 有序列表
 - [x] placeholder
 - [x] 橡皮擦
-- [ ] 卡片笔记
+- [ ] 思维导图
 - [ ] 超链接
 - [ ] 粘贴事件处理
 - [ ] 改用 option，控制功能启用
