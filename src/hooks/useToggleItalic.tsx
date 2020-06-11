@@ -4,7 +4,7 @@ import { useEventObservable } from '.';
 import { EventHandler } from './useEventObservable';
 import { Subject } from 'rxjs';
 import { FUNC } from '../const';
-import { isMarkActive } from '../utils';
+import { isMarkActive, toggleMark } from '../utils';
 
 export const isItalicActive = isMarkActive(FUNC.italic);
 
@@ -13,11 +13,7 @@ const useToggleItalic = (): [Subject<Editor>, EventHandler<Editor>] => {
 
   useEffect(() => {
     const subscription = italic$.subscribe((editor: Editor) => {
-      Transforms.setNodes(
-        editor,
-        { [FUNC.italic]: isItalicActive(editor) ? null : true },
-        { match: (n) => Text.isText(n), split: true }
-      );
+      toggleMark(editor, FUNC.italic);
     });
     return () => {
       subscription.unsubscribe();

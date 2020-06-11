@@ -4,7 +4,7 @@ import { useEventObservable } from '.';
 import { EventHandler } from './useEventObservable';
 import { Subject } from 'rxjs';
 import { FUNC } from '../const';
-import { isMarkActive } from '../utils';
+import { isMarkActive, toggleMark } from '../utils';
 
 export const isUnderlineActive = isMarkActive(FUNC.underline);
 
@@ -13,11 +13,7 @@ const useToggleUnderline = (): [Subject<Editor>, EventHandler<Editor>] => {
 
   useEffect(() => {
     const subscription = underline$.subscribe((editor: Editor) => {
-      Transforms.setNodes(
-        editor,
-        { [FUNC.underline]: isUnderlineActive(editor) ? null : true },
-        { match: (n) => Text.isText(n), split: true }
-      );
+      toggleMark(editor, FUNC.underline);
     });
     return () => {
       subscription.unsubscribe();

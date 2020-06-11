@@ -4,7 +4,7 @@ import { useEventObservable } from '.';
 import { EventHandler } from './useEventObservable';
 import { Subject } from 'rxjs';
 import { FUNC } from '../const';
-import { isMarkActive } from '../utils';
+import { isMarkActive, toggleMark } from '../utils';
 
 export const isBoldActive = isMarkActive(FUNC.bold);
 
@@ -13,11 +13,7 @@ const useToggleBold = (): [Subject<Editor>, EventHandler<Editor>] => {
 
   useEffect(() => {
     const subscription = bold$.subscribe((editor: Editor) => {
-      Transforms.setNodes(
-        editor,
-        { [FUNC.bold]: isBoldActive(editor) ? null : true },
-        { match: (n) => Text.isText(n), split: true }
-      );
+      toggleMark(editor, FUNC.bold);
     });
     return () => {
       subscription.unsubscribe();
