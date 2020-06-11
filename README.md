@@ -35,7 +35,9 @@ yarn run start
 - [x] 删除线
 - [x] 无序列表
 - [x] 有序列表
-- [ ] placeholder
+- [x] placeholder
+- [ ] 卡片笔记
+- [ ] 超链接
 - [ ] 粘贴事件处理
 - [ ] 改用 option，控制功能启用
 - [ ] 接入公式编辑器

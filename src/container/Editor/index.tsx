@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, KeyboardEvent } from 'react';
+import React, { useMemo, useCallback, KeyboardEvent, FC } from 'react';
 import { createEditor } from 'slate';
 import { Slate, Editable, withReact, RenderElementProps, RenderLeafProps } from 'slate-react';
 import { Element, Leaf } from '../../components';
@@ -16,7 +16,13 @@ import { HOTKEYS, FUNC } from '../../const';
 import isHotkey from 'is-hotkey';
 import { useObservable } from 'rxjs-hooks';
 
-const RichEditor = () => {
+interface IProps {
+  autoFocus?: boolean;
+  spellCheck?: boolean;
+  placeholder?: string;
+}
+
+const RichEditor: FC<IProps> = ({ autoFocus, spellCheck, placeholder }) => {
   const editor = useMemo(() => withReact(createEditor()), []);
 
   const renderElement = useCallback((props: RenderElementProps) => {
@@ -38,8 +44,8 @@ const RichEditor = () => {
   const [, toggleDel] = useToggleDel();
   const content = useObservable(() => contentChange$, [
     {
-      type: 'paragraph',
-      children: [{ text: 'A line of text in a paragraph.' }],
+      type: 'p',
+      children: [{ text: '' }],
     },
   ]);
 
@@ -49,6 +55,9 @@ const RichEditor = () => {
       <Editable
         renderElement={renderElement}
         renderLeaf={renderLeaf}
+        placeholder={placeholder || '请输入字符...'}
+        autoFocus={autoFocus || false}
+        spellCheck={spellCheck || false}
         onKeyDown={(e: KeyboardEvent) => {
           for (const func in HOTKEYS) {
             const hotkey = HOTKEYS[func];
