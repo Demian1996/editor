@@ -36,6 +36,7 @@ yarn run start
 - [x] 无序列表
 - [x] 有序列表
 - [x] placeholder
+- [x] 橡皮擦
 - [ ] 卡片笔记
 - [ ] 超链接
 - [ ] 粘贴事件处理

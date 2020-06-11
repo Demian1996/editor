@@ -7,8 +7,9 @@ type Color = 'color';
 type Layout = 'left' | 'center' | 'right';
 type List = 'orderedList' | 'unorderedList';
 type ListItem = 'listItem';
+type P = 'p';
 
-type FormatType = Bold | Italic | Underline | CodeBlock | Del | Color | Layout | List | ListItem;
+type FormatType = Bold | Italic | Underline | CodeBlock | Del | Color | Layout | List | ListItem | P;
 
 type FuncType = {
   bold: Bold;
@@ -27,4 +28,5 @@ type FuncType = {
     center: Layout;
     right: Layout;
   };
+  p: P;
 };

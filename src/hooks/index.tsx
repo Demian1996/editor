@@ -28,3 +28,5 @@ export * from './usePickColor';
 
 export { default as useToggleListBlock } from './useToggleListBlock';
 export * from './useToggleListBlock';
+
+export { default as useClear } from './useClear';

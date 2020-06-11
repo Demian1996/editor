@@ -17,6 +17,7 @@ import {
   getColor,
   isBlockListActive,
   useToggleListBlock,
+  useClear,
 } from '../../hooks';
 import styles from './index.module.css';
 import { FUNC, DEFAULT_FONT_COLOR } from '../../const';
@@ -36,6 +37,7 @@ const Toolbar: FC<ToolProps> = () => {
   const [, toggleOrderedListBlock] = useToggleListBlock(FUNC.list.orderedList);
   const [, toggleUnorderedListBlock] = useToggleListBlock(FUNC.list.unorderedList);
   const [, pickColor] = usePickColor();
+  const [, clear] = useClear();
   const createEventHandler = useCallback(
     (fn): MouseEventHandler => (e) => {
       e.preventDefault();
@@ -67,6 +69,8 @@ const Toolbar: FC<ToolProps> = () => {
     pickColor((e.target as HTMLInputElement).value);
   };
 
+  const onClear = createEventHandler(clear);
+
   const color = getColor(editor);
   return (
     <div>
@@ -85,6 +89,7 @@ const Toolbar: FC<ToolProps> = () => {
       <button className={isDelActive(editor) ? styles.active : ''} onClick={onToggleDel}>
         Del
       </button>
+      <button onClick={onClear}>Clear</button>
       <button
         className={isBlockListActive(editor, FUNC.list.orderedList) ? styles.active : ''}
         onClick={onToggleOrderedListBlock}

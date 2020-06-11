@@ -17,6 +17,7 @@ export const FUNC: FuncType = {
     right: 'right',
   },
   listItem: 'listItem',
+  p: 'p',
 };
 
 export const LIST_TYPES = [FUNC.list.orderedList, FUNC.list.unorderedList];
