@@ -26,6 +26,7 @@
     "rxjs-hooks": "^0.6.2",
     "seamless-immutable": "^7.1.4",
     "slate": "^0.58.3",
+    "slate-history": "^0.58.3",
     "slate-react": "^0.58.3",
     "typescript": "^3.9.3"
   },

@@ -15,6 +15,7 @@ import Toolbar from '../Toolbar';
 import { HOTKEYS, FUNC } from '../../const';
 import isHotkey from 'is-hotkey';
 import { useObservable } from 'rxjs-hooks';
+import { withHistory } from 'slate-history';
 
 interface IProps {
   autoFocus?: boolean;
@@ -23,7 +24,7 @@ interface IProps {
 }
 
 const RichEditor: FC<IProps> = ({ autoFocus, spellCheck, placeholder }) => {
-  const editor = useMemo(() => withReact(createEditor()), []);
+  const editor = useMemo(() => withHistory(withReact(createEditor())), []);
 
   const renderElement = useCallback((props: RenderElementProps) => {
     return <Element {...props} />;

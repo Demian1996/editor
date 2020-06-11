@@ -37,6 +37,7 @@ yarn run start
 - [x] 有序列表
 - [x] placeholder
 - [x] 橡皮擦
+- [x] 历史栈
 - [ ] 思维导图
 - [ ] 超链接
 - [ ] 粘贴事件处理
