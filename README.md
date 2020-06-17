@@ -19,6 +19,10 @@ yarn install
 yarn run start
 ```
 
+## 预览
+
+> github page: http://demian.wang/Editor/
+
 ## 特性
 
 - 使用 create-react-app 搭建
