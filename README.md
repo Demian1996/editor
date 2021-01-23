@@ -21,7 +21,7 @@ yarn run start
 
 ## 预览
 
-> github page: http://demian.wang/Editor/
+> github page: http://demian.wang/editor/
 
 ## 特性
 
